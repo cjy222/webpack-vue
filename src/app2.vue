@@ -1,6 +1,6 @@
 <template>
   <div>
-    <inputAndDiv :num="0"></inputAndDiv>
+    <inputAndDiv :num="2"></inputAndDiv>
   </div>
 </template>
 
