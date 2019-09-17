@@ -1,11 +1,15 @@
 <template>
   <div>
-    <inputAndDiv :num="0"></inputAndDiv>
+    <inputAndDiv :num="2"></inputAndDiv>
+    <router-link to="/">a</router-link>
+    <router-link to="/b">b</router-link>
+    <router-link to="/c">c</router-link>
+    <router-view />
   </div>
 </template>
 
 <script>
-import inputAndDiv from './inputAndDiv';
+const inputAndDiv = () => import('./components/inputAndDiv');
 
 export default {
   components: { inputAndDiv },
