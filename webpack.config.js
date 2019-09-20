@@ -6,19 +6,20 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // build使用�
 const env = require('./env');
 
 module.exports = {
+  mode: 'production',
   entry: {
     app: path.join(__dirname, 'src/index.js')
   },
   output: {
-    filename: "./static/[name].bundle.js",
-    path: path.join(__dirname, 'dist'),
-    chunkFilename: "./static/[name].chunk.js"
+    filename: "[name].bundle.js",
+    path: path.join(__dirname, 'dist/static/js'),
+    chunkFilename: "[name].chunk.js"
   },
   module: {
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        use: 'vue-loader'
       },
       {
         test: /\.(sa|sc|c)ss$/i,
@@ -30,7 +31,7 @@ module.exports = {
 						options: {
 						// 开启 CSS Modules
 							modules: {
-								localIdentName: '[path][name]__[local]'
+								localIdentName: '[hash]_[name]'
 							},
 						}
 					},
@@ -39,7 +40,6 @@ module.exports = {
       },
     ]
   },
-  mode: 'production',
   resolve: { // 文件路径自动补齐
     extensions: ['.js', '.vue']
   },
@@ -48,8 +48,11 @@ module.exports = {
       'process.env': env
     }),
     new VueLoaderPlugin(),
-    new MiniCssExtractPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
+    new MiniCssExtractPlugin({
+      filename: './static/css/[name].css',
+      chunkFilename: './static/css/[id].css',
+    }),
+    // new webpack.HotModuleReplacementPlugin(), // 热替换 发现在dev-server模式下注释了也还有用？
     new HtmlWebpackPlugin({ template: './index.html'}), //  为应用程序生成一个模板为template的HTML，并自动注入所有生成的 bundle。
 	],
 }
